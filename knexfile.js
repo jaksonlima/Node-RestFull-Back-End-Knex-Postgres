@@ -14,6 +14,12 @@ module.exports = {
       directory: `${__dirname}/src/database/seeds`,
     },
   },
+  onUpdateTrigger: (table) => `
+    CREATE TRIGGER ${table}_update_at
+    BEFORE UPDATE ON ${table}
+    FOR EACH ROW
+    EXECUTE PROCEDURE on_update_timestamp();
+  `,
 
   // staging: {
   //   client: "postgresql",
